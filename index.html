@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RestoreSnap AI Studio & Passport Maker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        surface: '#0f131c',
+                        'surface-dim': '#0a0e16',
+                        'surface-container': '#181c24',
+                        'surface-bright': '#232834',
+                        primary: '#6366f1',
+                        'primary-hover': '#4f46e5',
+                        accent: '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0e16;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .slider-handle {
+            left: var(--position, 50%);
+        }
+        .slider-clipped {
+            clip-path: polygon(0 0, var(--position, 50%) 0, var(--position, 50%) 100%, 0 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between select-none">
+    
+    <!-- Top Global Navbar -->
+    <header class="border-b border-slate-800 bg-[#0f131c]/90 backdrop-blur sticky top-0 z-50 px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-3 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20 relative">
+                    <i class="fa-solid fa-sparkles text-amber-300 text-sm absolute -top-1 -right-1"></i> R 
+                </div>
+                <div>
+                    <div class="font-extrabold tracking-tight text-lg leading-tight"> 
+                        Restore<span class="text-indigo-400">Snap</span> 
+                    </div>
+                    <div class="text-[10px] tracking-widest text-slate-400 font-semibold uppercase">AI Passport Studio</div>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center space-x-2 bg-slate-900/90 border border-slate-800 rounded-full px-3 py-1 text-xs text-slate-300">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 
+                <span>ENGINE V4.2 ACTIVE</span>
+            </div>
+            <nav class="hidden lg:flex items-center space-x-1 pl-4">
+                <a href="#" class="px-3 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-white border border-slate-700">Photo Studio & Editor</a> 
+                <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 transition">Home & Features</a> 
+                <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 transition">Batch Convert</a> 
+                <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 transition">Compliance Guide</a> 
+                <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 transition">Pricing Plans</a> 
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="hidden sm:flex items-center space-x-2 bg-indigo-950/40 border border-indigo-500/30 rounded-lg px-3 py-1.5 text-xs text-indigo-300">
+                <i class="fa-solid fa-circle-check text-cyan-400"></i> 
+                <span>ICAO Doc 9303 Verified</span> 
+            </div>
+            <button class="text-slate-400 hover:text-white p-2 text-sm"><i class="fa-regular fa-bell"></i></button>
+            <button class="text-slate-400 hover:text-white p-2 text-sm"><i class="fa-regular fa-circle-question"></i></button>
+            <div class="flex items-center space-x-2 border-l border-slate-800 pl-4">
+                <div class="w-8 h-8 rounded-full bg-indigo-600/40 border border-indigo-400 flex items-center justify-center font-bold text-xs text-indigo-200"> SP </div>
+                <div class="text-left hidden md:block">
+                    <div class="text-xs font-bold leading-tight">Studio Pro</div>
+                    <div class="text-[11px] text-cyan-400 font-semibold">94 Credits</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Workflow Progress Stepper -->
+    <div class="border-b border-slate-800/80 bg-[#121620] px-6 py-2.5 flex items-center justify-between text-xs overflow-x-auto">
+        <div class="flex items-center space-x-2 text-slate-400 min-w-max">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span> 
+            <span class="font-bold text-slate-200">SESSION: #RESTORE-9082</span> 
+            <span class="text-slate-600">|</span> 
+            <span>ISO Biometric Engine 4.2</span>
+        </div>
+        <div class="flex items-center space-x-2 sm:space-x-3 text-xs min-w-max font-medium">
+            <div class="flex items-center space-x-1.5 text-emerald-400 bg-emerald-950/30 px-2.5 py-1 rounded border border-emerald-800/50">
+                <i class="fa-solid fa-check text-[10px]"></i> 
+                <span>1. Archival Upload</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i>
+            <div class="flex items-center space-x-1.5 text-emerald-400 bg-emerald-950/30 px-2.5 py-1 rounded border border-emerald-800/50">
+                <i class="fa-solid fa-check text-[10px]"></i> 
+                <span>2. Restoration & Colorize</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i>
+            <div class="flex items-center space-x-1.5 text-indigo-300 bg-indigo-900/40 px-2.5 py-1 rounded border border-indigo-500 font-bold">
+                <span>3. Background Replacement</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i>
+            <div class="flex items-center space-x-1.5 text-slate-500 bg-slate-900/60 px-2.5 py-1 rounded border border-slate-800">
+                <span>4. Fixed Ratio Manual Crop</span>
+            </div>
+        </div>
+        <div class="hidden xl:flex items-center space-x-3 text-xs text-slate-400 min-w-max">
+            <span>Original Resolution: 1140×1620 px</span>
+            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-shield-check"></i> 98.4% Embassy Clearance</span>
+        </div>
+    </div>
+
+    <!-- Studio Workspace Main Grid -->
+    <main class="flex-1 grid grid-cols-1 xl:grid-cols-12 gap-6 p-6 max-w-[1800px] w-full mx-auto">
+        
+        <!-- Left Controls Panel (Specs & Source Info) -->
+        <div class="xl:col-span-3 space-y-5 flex flex-col">
+            <!-- Country Regulatory Selector -->
+            <div class="bg-[#181c24] border border-slate-800 rounded-2xl p-5 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <label class="text-sm font-bold text-slate-200">Country Standard</label> 
+                    <span class="text-[11px] bg-slate-800 text-indigo-300 px-2 py-0.5 rounded font-mono border border-slate-700">Doc 9303</span> 
+                </div>
+                <select id="countrySelect" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500"> 
+                    <option value="us">United States Passport / Visa (2×2 in)</option> 
+                    <option value="in">India (Passport / OCI / Visa 35×35 mm)</option> 
+                    <option value="uk">UK & Schengen Standard (35×45 mm)</option> 
+                    <option value="ca">Canada Passport (50×70 mm)</option> 
+                </select>
+                <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800/80 text-xs">
+                    <div> 
+                        <span class="text-slate-400 block text-[11px]">Frame Ratio</span> 
+                        <span class="font-bold text-slate-200 font-mono" id="ratioDisplay">51 × 51 mm (1:1)</span> 
+                    </div>
+                    <div> 
+                        <span class="text-slate-400 block text-[11px]">Head Height</span> 
+                        <span class="font-bold text-cyan-400 font-mono" id="headHeightDisplay">25 - 35 mm (60%)</span> 
+                    </div>
+                    <div> 
+                        <span class="text-slate-400 block text-[11px]">Print Quality</span> 
+                        <span class="font-bold text-slate-200">600 DPI Master</span> 
+                    </div>
+                    <div> 
+                        <span class="text-slate-400 block text-[11px]">Embassy BG Spec</span> 
+                        <span class="font-bold text-indigo-300" id="specBgDisplay">Pure White Only</span> 
+                    </div>
+                </div>
+
+                <!-- Biometric Checklist -->
+                <div class="mt-4 pt-4 border-t border-slate-800/80 space-y-2">
+                    <div class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Biometric Validation</div>
+                    <div class="flex items-center justify-between text-xs text-slate-300">
+                        <span class="flex items-center space-x-2"> 
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> 
+                            <span>Neutral Expression</span> 
+                        </span> 
+                        <span class="text-emerald-400 font-semibold text-[11px]">PASS</span> 
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-slate-300">
+                        <span class="flex items-center space-x-2"> 
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> 
+                            <span>Eye Level In Allowable Band</span> 
+                        </span> 
+                        <span class="text-emerald-400 font-semibold text-[11px]">PASS</span> 
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-slate-300">
+                        <span class="flex items-center space-x-2"> 
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> 
+                            <span>Shadow-Free Masking</span> 
+                        </span> 
+                        <span class="text-cyan-400 font-semibold text-[11px]">ACTIVE</span> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uploaded Archive Metadata Card -->
+			<div class="mb-3 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+				<label class="block text-xs font-bold text-indigo-300 uppercase tracking-wider mb-1.5"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload Photo to Cloud AI</label>
+				<input type="file" id="imageInput" accept="image/*" class="w-full text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer">
+			</div>
+            <div class="bg-[#181c24] border border-slate-800 rounded-2xl p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Source Archive</span> 
+                    <button class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center space-x-1"> 
+                        <i class="fa-solid fa-arrow-up-from-bracket text-[10px]"></i> 
+                        <span>Upload New</span> 
+                    </button>
+                </div>
+                <div class="flex items-center space-x-3 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 overflow-hidden relative flex items-center justify-center border border-slate-700">
+                        <i class="fa-solid fa-image text-slate-500"></i> 
+                        <span class="absolute bottom-0 inset-x-0 bg-black/80 text-[8px] text-center font-bold py-0.5 text-slate-300">RAW</span>
+                    </div>
+                    <div class="overflow-hidden">
+                        <div class="text-xs font-bold text-slate-200 truncate">Archival_Portrait_1974.jpg</div>
+                        <div class="text-[11px] text-slate-400">Silver Gelatin / Creased / 24-bit</div>
+                        <div class="text-[10px] text-emerald-400">Scratch Filter: 96% Inpainted</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mt-3">
+                    <button class="py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"> 
+                        <i class="fa-solid fa-expand text-[10px] mr-1"></i> Auto-Center 
+                    </button>
+                    <button class="py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition"> 
+                        <i class="fa-solid fa-rotate-left text-[10px] mr-1"></i> Reset Edits 
+                    </button>
+                </div>
+            </div>
+
+            <!-- Print Layout Selection -->
+            <div class="bg-[#181c24] border border-slate-800 rounded-2xl p-5 mt-auto">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Print Output Format</div>
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="p-3 rounded-xl border-2 border-indigo-500 bg-indigo-950/20 text-center text-slate-200 flex flex-col items-center"> 
+                        <i class="fa-regular fa-square text-lg mb-1 text-indigo-400"></i> 
+                        <span class="text-xs font-bold">Single Cut</span> 
+                        <span class="text-[10px] text-slate-400">2×2 in Individual</span> 
+                    </button>
+                    <button class="p-3 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-900/60 text-center text-slate-400 hover:text-slate-200 flex flex-col items-center"> 
+                        <i class="fa-solid fa-table-cells text-lg mb-1"></i> 
+                        <span class="text-xs font-bold">4×6" Print Sheet</span> 
+                        <span class="text-[10px] text-slate-400">6–8 Cut-Guides</span> 
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Canvas (Precision Crop & Split Viewer) -->
+        <div class="xl:col-span-6 flex flex-col items-center">
+            <!-- Toolbar Controls -->
+            <div class="w-full bg-[#181c24] border border-slate-800 rounded-t-2xl px-4 py-2 flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-2">
+                    <button id="zoomOut" class="p-1.5 hover:bg-slate-800 rounded text-slate-300"><i class="fa-solid fa-minus"></i></button>
+                    <span id="zoomLevel" class="font-mono text-slate-200 font-semibold">100%</span>
+                    <button id="zoomIn" class="p-1.5 hover:bg-slate-800 rounded text-slate-300"><i class="fa-solid fa-plus"></i></button>
+                    <button id="resetFit" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded text-[11px] text-slate-300">Fit Frame</button>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <label class="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="checkbox" id="toggleBiometricGuides" checked class="rounded bg-slate-800 border-slate-700 text-indigo-500"> 
+                        <span class="text-cyan-400 font-semibold"><i class="fa-solid fa-crosshairs"></i> Biometric Guides</span>
+                    </label>
+                    <label class="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="checkbox" id="toggleRuleThirds" class="rounded bg-slate-800 border-slate-700 text-indigo-500"> 
+                        <span class="text-slate-400">Thirds</span>
+                    </label>
+                    <button class="text-slate-400 hover:text-slate-200 p-1"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Interactive Canvas Stage with locked aspect frame and split comparison -->
+            <div class="relative w-full aspect-square max-h-[520px] bg-slate-950 border-x border-slate-800 flex items-center justify-center overflow-hidden" id="canvasContainer">
+                <div id="backdropLayer" class="absolute inset-0 transition-colors duration-300 bg-white"></div>
+                <div class="relative w-full h-full flex items-center justify-center p-8">
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 shadow-2xl rounded overflow-hidden select-none" id="cropBox">
+                        <div class="absolute inset-0 bg-cover bg-center flex items-center justify-center bg-slate-900" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80');"></div>
+                        <div id="clippedOriginal" class="absolute inset-0 bg-cover bg-center grayscale contrast-125 brightness-90 slider-clipped filter sepia-[0.2]" style="--position: 50%; background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80');">
+                            <div class="absolute inset-0 bg-[radial-gradient(#00000030_1px,transparent_1px)] [background-size:16px_16px] opacity-70"></div>
+                            <div class="absolute top-10 left-4 w-32 h-0.5 bg-white/40 rotate-45"></div>
+                            <div class="absolute bottom-16 right-6 w-48 h-0.5 bg-white/30 -rotate-12"></div>
+                        </div>
+                        <div id="sliderHandle" class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-[0_0_10px_rgba(0,0,0,0.5)] z-20" style="left: 50%;">
+                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-white text-slate-800 rounded-full flex items-center justify-center shadow-lg text-[10px] font-bold">
+                                <i class="fa-solid fa-arrows-left-right"></i>
+                            </div>
+                        </div>
+                        <div id="biometricGuideContainer" class="absolute inset-0 pointer-events-none z-30 flex flex-col items-center justify-between p-4 border-2 border-dashed border-cyan-400/80">
+                            <div class="w-full flex items-center justify-between border-b border-cyan-400/60 pb-0.5">
+                                <span class="text-[9px] font-mono text-cyan-300 font-bold bg-black/60 px-1 rounded">CROWN APEX</span> 
+                                <span class="text-[8px] font-mono text-cyan-400">MAX: 35mm</span> 
+                            </div>
+                            <div class="w-48 h-60 rounded-full border border-cyan-400/40 absolute top-6 left-1/2 -translate-x-1/2 flex flex-col justify-center items-center">
+                                <div class="w-full border-b border-indigo-400/70 border-dashed relative">
+                                    <span class="absolute -top-3.5 right-2 text-[8px] font-mono text-indigo-300 font-bold bg-black/60 px-1 rounded">EYE LEVEL: 32mm</span>
+                                </div>
+                            </div>
+                            <div class="w-full flex items-center justify-between border-t border-cyan-400/60 pt-0.5 mt-auto">
+                                <span class="text-[9px] font-mono text-cyan-300 font-bold bg-black/60 px-1 rounded">CHIN DATUM</span> 
+                                <span class="text-[8px] font-mono text-cyan-400">MIN: 25mm</span> 
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur text-[10px] font-mono text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/40 z-30">
+                            <i class="fa-solid fa-lock text-[8px]"></i> 1:1 LOCKED
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute bottom-3 inset-x-6 flex items-center justify-between text-[11px] font-bold text-slate-300 z-30 pointer-events-none">
+                    <span class="bg-black/70 px-2 py-1 rounded backdrop-blur border border-white/10">ORIGINAL DAMAGED</span> 
+                    <span class="bg-indigo-950/80 text-cyan-300 px-2 py-1 rounded backdrop-blur border border-cyan-500/30">AI RESTORED + COMPLIANT</span> 
+                </div>
+            </div>
+
+            <!-- Canvas Status Indicator Bar -->
+            <div class="w-full bg-[#181c24] border border-slate-800 rounded-b-2xl px-5 py-3 flex flex-wrap items-center justify-between text-xs text-slate-400">
+                <div class="flex items-center space-x-4">
+                    <span class="flex items-center space-x-1.5 text-emerald-400 font-semibold">
+                        <i class="fa-solid fa-circle-check"></i> 
+                        <span>Biometric Compliant</span> 
+                    </span> 
+                    <span>Ratio: 1.00</span> 
+                    <span>Color: <b id="activeHexLabel" class="text-slate-200">#FFFFFF</b></span> 
+                </div>
+                <div class="font-mono text-slate-400">Target Output: 1200 × 1200 px @ 300 DPI</div>
+            </div>
+        </div>
+
+        <!-- Right Controls Panel (Background Picker, AI Toggles & Export) -->
+        <div class="xl:col-span-3 space-y-5 flex flex-col">
+            <!-- Consular Background Selection (Interactive) -->
+            <div class="bg-[#181c24] border border-slate-800 rounded-2xl p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <label class="text-sm font-bold text-slate-200">Consular Background</label> 
+                    <span class="text-xs text-cyan-400 font-semibold">Instant Swap</span> 
+                </div>
+                <p class="text-xs text-slate-400 mb-4">Select an official embassy background or pick a custom tone:</p>
+                <div class="grid grid-cols-3 gap-2.5" id="colorPalette">
+                    <button data-color="#ffffff" data-label="Pure White" data-spec="US / CA / FR" class="color-btn active ring-2 ring-indigo-500 p-2.5 rounded-xl bg-slate-900 border border-slate-700 flex flex-col items-center hover:bg-slate-800 transition">
+                        <span class="w-7 h-7 rounded-full bg-white border border-slate-300 shadow-sm mb-1.5"></span> 
+                        <span class="text-xs font-bold text-slate-200">Pure White</span> 
+                        <span class="text-[9px] text-slate-400">US / CA / FR</span> 
+                    </button>
+                    <button data-color="#38bdf8" data-label="Sky Blue" data-spec="India / OCI" class="color-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center hover:bg-slate-800 transition">
+                        <span class="w-7 h-7 rounded-full bg-[#38bdf8] shadow-sm mb-1.5"></span> 
+                        <span class="text-xs font-bold text-slate-200">Sky Blue</span> 
+                        <span class="text-[9px] text-slate-400">India / OCI</span> 
+                    </button>
+                    <button data-color="#e2e8f0" data-label="Light Grey" data-spec="EU / UK / Schengen" class="color-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center hover:bg-slate-800 transition">
+                        <span class="w-7 h-7 rounded-full bg-[#e2e8f0] border border-slate-400 shadow-sm mb-1.5"></span> 
+                        <span class="text-xs font-bold text-slate-200">Soft Grey</span> 
+                        <span class="text-[9px] text-slate-400">EU / UK</span> 
+                    </button>
+                    <button data-color="#f8fafc" data-label="Off-White" data-spec="General Visa" class="color-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center hover:bg-slate-800 transition">
+                        <span class="w-7 h-7 rounded-full bg-[#f8fafc] border border-slate-300 shadow-sm mb-1.5"></span> 
+                        <span class="text-xs font-bold text-slate-200">Off-White</span> 
+                        <span class="text-[9px] text-slate-400">Archival</span> 
+                    </button>
+                    <button data-color="#1e293b" data-label="Studio Navy" data-spec="Portrait / ID" class="color-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center hover:bg-slate-800 transition">
+                        <span class="w-7 h-7 rounded-full bg-[#1e293b] shadow-sm mb-1.5"></span> 
+                        <span class="text-xs font-bold text-slate-200">Navy Blue</span> 
+                        <span class="text-[9px] text-slate-400">Portrait</span> 
+                    </button>
+                    <button data-color="#0f172a" data-label="Slate Dark" data-spec="Artistic Card" class="color-btn p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center hover:bg-slate-800 transition">
+                        <span class="w-7 h-7 rounded-full bg-[#0f172a] shadow-sm mb-1.5"></span> 
+                        <span class="text-xs font-bold text-slate-200">Deep Slate</span> 
+                        <span class="text-[9px] text-slate-400">Artistic</span> 
+                    </button>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center space-x-2">
+                    <input type="color" id="hexPicker" value="#ffffff" class="w-9 h-9 rounded-lg bg-transparent border-0 cursor-pointer">
+                    <input type="text" id="hexTextInput" value="#FFFFFF" class="w-full bg-slate-900 border border-slate-700 text-xs font-mono text-slate-200 rounded-lg px-3 py-2 uppercase">
+                    <button id="applyCustomHex" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg text-slate-200">Apply</button>
+                </div>
+            </div>
+
+            <!-- AI Restoration Engine Toggles -->
+            <div class="bg-[#181c24] border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-slate-300 uppercase tracking-wider">AI Processing Suite</label> 
+                    <span class="text-[10px] text-indigo-400 font-mono font-bold bg-indigo-950/70 px-1.5 py-0.5 rounded">v4.2 PRO</span>
+                </div>
+                <label class="flex items-center justify-between text-xs text-slate-300 cursor-pointer pt-1">
+                    <span>Facial Detail Sharpening</span> 
+                    <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0">
+                </label>
+                <label class="flex items-center justify-between text-xs text-slate-300 cursor-pointer">
+                    <span>Vibrant Realistic Colorize</span> 
+                    <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0">
+                </label>
+                <label class="flex items-center justify-between text-xs text-slate-300 cursor-pointer">
+                    <span>Crease & Scratch Inpainting</span> 
+                    <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0">
+                </label>
+                <label class="flex items-center justify-between text-xs text-slate-300 cursor-pointer">
+                    <span>Smart Attire (Dark Formal Suit AI)</span> 
+                    <input type="checkbox" class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0">
+                </label>
+                <div class="pt-3 border-t border-slate-800 space-y-3 text-xs">
+                    <div>
+                        <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                            <span>Colorization Saturation</span> 
+                            <span class="font-mono text-cyan-400">85%</span>
+                        </div>
+                        <input type="range" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded" value="85">
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                            <span>Facial Scratch Inpainting Density</span> 
+                            <span class="font-mono text-cyan-400">92%</span>
+                        </div>
+                        <input type="range" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded" value="92">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Precision Calibration (Aspect Locked) -->
+            <div class="bg-[#181c24] border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-slate-300 uppercase tracking-wider">Manual Frame Calibration</label> 
+                    <span class="text-[10px] text-emerald-400 font-mono"><i class="fa-solid fa-lock"></i> Fixed Aspect</span>
+                </div>
+                <div>
+                    <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                        <span>Subject Zoom / Scale</span> 
+                        <span class="font-mono text-slate-200">100%</span>
+                    </div>
+                    <input type="range" id="subjectScale" min="80" max="150" value="100" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded">
+                </div>
+                <div>
+                    <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                        <span>Tilt Angle Correction</span> 
+                        <span class="font-mono text-cyan-400">0.0°</span>
+                    </div>
+                    <input type="range" min="-10" max="10" value="0" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded">
+                </div>
+            </div>
+
+            <!-- Final Actions (Export & Print) -->
+            <div class="mt-auto space-y-3 pt-2">
+                <button id="generateBtn" onclick="processImageCloud()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition">
+					<i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> 
+					<span>Process & Re-Generate Biometric</span>
+				</button>
+                <button class="w-full py-3 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-sm shadow-md flex items-center justify-center space-x-2 transition">
+                    <i class="fa-solid fa-download"></i> 
+                    <span>Download 300 DPI (JPEG & Print PDF)</span>
+                </button>
+                <p class="text-[11px] text-center text-slate-500">Official Embassy Pass Guarantee • Size: ~4.8 MB</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Global Legal & Technical Footer -->
+    <footer class="border-t border-slate-800 bg-[#0f131c] px-6 py-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+        <div class="flex items-center space-x-3">
+            <div class="w-5 h-5 rounded bg-indigo-600 flex items-center justify-center text-white font-bold text-[10px]">R</div>
+            <span>© 2025 RestoreSnap AI Lab. Forensic Precision & Optical Restoration.</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span>ISO/IEC 19794-5 Compliant</span> 
+            <span>•</span> 
+            <span>Biometric Verification Engine v4.2</span> 
+            <span>•</span> 
+            <a href="#" class="hover:text-slate-300">Darkroom Mode</a>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        const colorButtons = document.querySelectorAll('.color-btn');
+        const backdropLayer = document.getElementById('backdropLayer');
+        const activeHexLabel = document.getElementById('activeHexLabel');
+        const hexTextInput = document.getElementById('hexTextInput');
+        const hexPicker = document.getElementById('hexPicker');
+        const applyCustomHex = document.getElementById('applyCustomHex');
+
+        function updateBackgroundColor(colorHex) {
+            backdropLayer.style.backgroundColor = colorHex;
+            activeHexLabel.innerText = colorHex.toUpperCase();
+            hexTextInput.value = colorHex.toUpperCase();
+            hexPicker.value = colorHex;
+        }
+
+        colorButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                colorButtons.forEach(b => b.classList.remove('ring-2', 'ring-indigo-500', 'border-slate-700'));
+                btn.classList.add('ring-2', 'ring-indigo-500');
+                const chosenColor = btn.getAttribute('data-color');
+                updateBackgroundColor(chosenColor);
+            });
+        });
+
+        applyCustomHex.addEventListener('click', () => {
+            const val = hexTextInput.value.trim();
+            if (val) updateBackgroundColor(val);
+        });
+
+        hexPicker.addEventListener('input', (e) => {
+            updateBackgroundColor(e.target.value);
+        });
+
+        const cropBox = document.getElementById('cropBox');
+        const clippedOriginal = document.getElementById('clippedOriginal');
+        const sliderHandle = document.getElementById('sliderHandle');
+        let isDragging = false;
+
+        function setSliderPosition(percentage) {
+            const clamped = Math.max(0, Math.min(100, percentage));
+            clippedOriginal.style.setProperty('--position', `${clamped}%`);
+            sliderHandle.style.left = `${clamped}%`;
+        }
+
+        sliderHandle.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = cropBox.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const pct = (x / rect.width) * 100;
+            setSliderPosition(pct);
+        });
+
+        sliderHandle.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging || !e.touches[0]) return;
+            const rect = cropBox.getBoundingClientRect();
+            const x = e.touches[0].clientX - rect.left;
+            const pct = (x / rect.width) * 100;
+            setSliderPosition(pct);
+        });
+
+        const toggleBiometricGuides = document.getElementById('toggleBiometricGuides');
+        const biometricGuideContainer = document.getElementById('biometricGuideContainer');
+        toggleBiometricGuides.addEventListener('change', (e) => {
+            biometricGuideContainer.style.display = e.target.checked ? 'flex' : 'none';
+        });
+
+        const countrySelect = document.getElementById('countrySelect');
+        const ratioDisplay = document.getElementById('ratioDisplay');
+        const headHeightDisplay = document.getElementById('headHeightDisplay');
+        const specBgDisplay = document.getElementById('specBgDisplay');
+        
+        const countryData = {
+            us: { ratio: '51 × 51 mm (1:1)', head: '25 - 35 mm (60%)', bg: 'Pure White Only' },
+            in: { ratio: '35 × 35 mm (1:1)', head: '70% - 80% Facial area', bg: 'Light Sky Blue / White' },
+            uk: { ratio: '35 × 45 mm (Standard)', head: '29 - 34 mm Crown-Chin', bg: 'Light Grey or Cream' },
+            ca: { ratio: '50 × 70 mm (Large)', head: '31 - 36 mm Head Area', bg: 'Pure White Only' }
+        };
+
+        countrySelect.addEventListener('change', (e) => {
+            const selected = countryData[e.target.value];
+            if (selected) {
+                ratioDisplay.innerText = selected.ratio;
+                headHeightDisplay.innerText = selected.head;
+                specBgDisplay.innerText = selected.bg;
+            }
+        });
+
+        const subjectScale = document.getElementById('subjectScale');
+        subjectScale.addEventListener('input', (e) => {
+            const scaleVal = e.target.value / 100;
+            cropBox.style.transform = `scale(${scaleVal})`;
+        });
+
+        const generateBtn = document.getElementById('generateBtn');
+        generateBtn.addEventListener('click', () => {
+            const origText = generateBtn.innerHTML;
+            generateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Processing AI Alignment...</span>';
+            setTimeout(() => {
+                generateBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-300"></i><span>Biometrics Synchronized!</span>';
+                setTimeout(() => {
+                    generateBtn.innerHTML = origText;
+                }, 2000);
+            }, 1000);
+        });
+		// Hugging Face Cloud AI integration
+const HF_TOKEN = "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";
+
+async function processImageCloud() {
+    const fileInput = document.getElementById("imageInput");
+    const outputImg = document.getElementById("outputImage");
+
+    if (!fileInput || fileInput.files.length === 0) {
+        alert("Please upload an image first!");
+        return;
+    }
+
+    const file = fileInput.files[0];
+    console.log("Processing via Hugging Face Cloud AI...");
+
+    try {
+        const response = await fetch(
+            "https://api-inference.huggingface.co/models/briaai/RMBG-1.4",
+            {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${HF_TOKEN}`,
+                    "Content-Type": file.type
+                },
+                body: file
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to process image through Hugging Face API.");
+        }
+
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+
+        if (outputImg) {
+            outputImg.src = imageUrl;
+            outputImg.classList.remove("hidden");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error processing image. Check console.");
+    }
+}
+    </script>
+</body>
+</html>
